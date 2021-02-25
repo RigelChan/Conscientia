@@ -14,15 +14,15 @@ class Player:
         self.moving_left = False
         self.moving_right = False
 
-    def update(self, dt):
+    def update(self): # TODO RE-ADD DELTA TIME
         if self.moving_up:
-            self.player_rect.y -= self.player_speed * dt
+            self.player_rect.y -= self.player_speed #* dt
         if self.moving_down:
-            self.player_rect.y += self.player_speed * dt
+            self.player_rect.y += self.player_speed #* dt
         if self.moving_right:
-            self.player_rect.x += self.player_speed * dt
+            self.player_rect.x += self.player_speed #* dt
         if self.moving_left:
-            self.player_rect.x -= self.player_speed * dt
+            self.player_rect.x -= self.player_speed #* dt
 
     def draw(self, screen):
         screen.blit(self.player_sprite, self.player_rect)

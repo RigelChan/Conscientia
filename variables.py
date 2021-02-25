@@ -1,9 +1,5 @@
 class Variables:
     def __init__(self):
-        # Game states
-        self.inMenu = True
-        self.inGame = False
-        
         # Variables.
         self.clicking = False
         self.overPlay = False

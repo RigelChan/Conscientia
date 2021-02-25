@@ -28,11 +28,10 @@ class Game: # The Main Game Class.
         # Mouse variables.
         self.variables.clicking = False
 
-        # Menu.
+        # Scene objects.
         self.main_menu = s.MainMenu(self)
-
-        # Test Level.
-        self.test_level = s.TestLevel(self)
+        self.sm = s.SceneManager()
+        self.sm.push(self.main_menu)
 
     # Basic Game Logic =======================================================================
 
@@ -46,14 +45,11 @@ class Game: # The Main Game Class.
         self.screen.blit(self.cursor, (pygame.mouse.get_pos()[0]-15, pygame.mouse.get_pos()[1]-15))
 
     def update_screen(self): # Updates the screen each frame.
-        if self.variables.inMenu:
-            self.main_menu.draw(self.dt)
-        if self.variables.inGame:
-            self.test_level.draw()
+        self.sm.draw()
         self.draw_cursor()
         pygame.display.update()
 
-    def check_events(self): # Checks for input events.
+    def check_events(self, sm): # Checks for input events.
         for event in pygame.event.get():
             
             if event.type == pygame.QUIT:
@@ -66,18 +62,21 @@ class Game: # The Main Game Class.
                 self.keyboard_input_u(event)
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                self.mouse_input(event)
+                self.mouse_input(event, self.sm)
 
             elif event.type == pygame.MOUSEBUTTONUP:
                 self.variables.clicking = False
 
             elif event.type == pygame.MOUSEMOTION:
                 self.mouse_movement(event)
-                
-    def keyboard_input_d(self, event):
+
+    def test_dt(self, event):
         if event.key == pygame.K_PERIOD:
             self.constants.fps_target = 10
-        elif event.key == pygame.K_w:
+
+    def keyboard_input_d(self, event):
+        self.test_dt(event)
+        if event.key == pygame.K_w:
             self.test_level.player.moving_up = True
         elif event.key == pygame.K_s:
             self.test_level.player.moving_down = True
@@ -87,9 +86,6 @@ class Game: # The Main Game Class.
             self.test_level.player.moving_left = True
         elif event.key == pygame.K_g:
             print("unused key")
-        elif event.key == pygame.K_q:
-            self.variables.inGame = False
-            self.variables.inMenu = True
 
     def keyboard_input_u(self, event):
         if event.key == pygame.K_w:
@@ -104,14 +100,13 @@ class Game: # The Main Game Class.
     def mouse_movement(self, event):
         self.main_menu.mouse_menu_movement(event)
 
-    def mouse_input(self, event):
-        self.main_menu.mouse_menu_input(event)
+    def mouse_input(self, event, sm):
+        self.main_menu.mouse_menu_input(event, self.sm)
 
     def run_game(self): # Runs the main game functions.
         while True:
             self.delta_time()
-            self.check_events()
-            self.test_level.update(self.dt)
+            self.check_events(self.sm)
             self.update_screen()
             self.clock.tick(self.constants.fps_target)
 
