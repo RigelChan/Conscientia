@@ -87,6 +87,9 @@ class Game: # The Main Game Class.
             self.test_level.player.moving_left = True
         elif event.key == pygame.K_g:
             print("unused key")
+        elif event.key == pygame.K_q:
+            self.variables.inGame = False
+            self.variables.inMenu = True
 
     def keyboard_input_u(self, event):
         if event.key == pygame.K_w:
