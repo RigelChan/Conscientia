@@ -2,7 +2,6 @@ import pygame
 import sys
 from button import Button
 from player import Player
-from settings import Settings
 from graphics import Graphics
 
 class Scene:
