@@ -1,0 +1,28 @@
+[Dream/Mind Exploration Themed Game] - 'Conscientia'
+
+[Font] - Unispace
+
+[Story]
+Idea: #1 - You are a part of a larger organisms consciousness, that has become aware of itself
+you explore the layers of the an organisms psyche, with subtle hints to what is going on
+inside their head.
+
+Idea: #2 - You are a particle inside the heart of a dying star, and the star is represented a living
+being scared of its own death, you witness the iron core collapse at the end, as the star explodes.
+
+[Aesthetics]
+Space art style, with luminous bodies representing characters and points of interaction.
+
+[Gameplay]
+-Exploration Based
+-Combat Encounters
+-2D with movement: up, down, left and right.
+-Story told through encounters.
+
+[Todo]
+- Main Menu.
+- Basic movement mechanics.
+- Different Levels.
+- Scrolling text.
+- Basic NPC AI.
+- An Ending.
