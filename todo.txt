@@ -1,2 +1,10 @@
-[Test Level]
-- Transitions
+[Friday]
+- Rework of input system, by creating an input stream class.
+- Get the player moving again.
+- Be able to switch from the game to the menu.
+
+[Saturday]
+- Fix Delta Time.
+
+[Sunday]
+- Transitions.
