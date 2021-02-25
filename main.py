@@ -34,6 +34,10 @@ class Game: # The Main Game Class.
         # Test Level.
         self.test_level = s.TestLevel(self)
 
+        # Scene Management.
+        self.sm = s.SceneManager()
+        self.sm.push(self.main_menu)
+
     # Basic Game Logic =======================================================================
 
     def delta_time(self):

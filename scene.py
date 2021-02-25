@@ -90,7 +90,6 @@ class MainMenu(Scene):
             if self.variables.overExit:
                 sys.exit(0)
 
-
 class TestLevel(Scene): 
     def __init__(self, game):
         self.variables = game.variables
@@ -109,10 +108,48 @@ class TestLevel(Scene):
     def update(self, dt):
         self.player.update(dt)
 
-class TransitionScence(Scene): # TODO
-    def __init__(self):
-        pass
+class TransitionScene(Scene):
+    def __init__(self, game, fromScene, toScene):
+        self.percentage = 0
+        self.fromScene = fromScene
+        self.toScene = toScene
+        self.constants = game.constants
+        self.screen = game.screen
 
-class FadeTransitionScene(TransitionScence): # TODO
+    def update(self):
+        self.percentage += 2
+        if self.percentage <= 100:
+            print("Changed Scene.")
+            pass # TODO Create a scene manager to handle this.
+
+class FadeTransitionScene(TransitionScene):
+    def draw(self):
+        if self.percentage <= 50:
+            self.fromScene.draw()
+        else:
+            self.toScene.draw()
+
+        overlay = pygame.Surface(self.constants.screen_width, self.constants.screen_height)
+        alpha = int(abs((255 - ((255/50)*self.percentage))))
+        overlay.set_alpha(alpha)
+        overlay.fill(self.constants.black)
+        self.screen.blit(overlay, (0, 0))
+
+class SceneManager:
     def __init__(self):
-        pass
+        self.scenes = []
+    def input(self):
+        if len(self.scenes) > 0:
+            self.scenes[-1].input()
+    def update(self):
+        if len(self.scenes) > 0:
+            self.scenes[-1].update()
+    def draw(self):
+        if len(self.scenes) > 0:
+            self.scenes[-1].draw()
+    def pop(self, scene):
+        self.scenes.pop(scene)
+    def push(self, scene):
+        self.scenes.append(scene)
+    def set(self, scene):
+        self.scenes = [scene]
