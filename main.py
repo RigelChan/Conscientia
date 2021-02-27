@@ -66,14 +66,6 @@ class Game: # The Main Game Class.
     def keyboard_input_d(self, event):
         self.test_dt(event)
 
-    def mouse_movement(self, event):
-        #self.main_menu.mouse_menu_movement(event)
-        pass
-
-    def mouse_input(self, event, sm):
-        #self.main_menu.mouse_menu_input(event, self.sm)
-        pass
-
     def run_game(self): # Runs the main game functions.
         while True:
             self.delta_time()
