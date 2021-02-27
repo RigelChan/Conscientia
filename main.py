@@ -1,6 +1,6 @@
 import pygame
-import sys
 import time
+import sys
 import os
 import scene as s
 from graphics import Graphics
@@ -10,7 +10,7 @@ from variables import Variables
 class Game: # The Main Game Class.
     def __init__(self):
         pygame.init()
-        pygame.mixer.pre_init(frequency=44100, size=-16, channels=2, buffer=312)
+        pygame.mixer.pre_init(frequency=44100, size=16, channels=2, buffer=312)
 
         self.constants = Constants()
         self.variables = Variables()
@@ -49,64 +49,35 @@ class Game: # The Main Game Class.
         self.draw_cursor()
         pygame.display.update()
 
-    def check_events(self, sm): # Checks for input events.
+    def check_events(self):
         for event in pygame.event.get():
-            
-            if event.type == pygame.QUIT:
+            self.quit(event)
+            self.sm.input(event)
+
+    def quit(self, event):
+        if event.type == pygame.QUIT:
                 sys.exit(0)
 
-            elif event.type == pygame.KEYDOWN:
-                self.keyboard_input_d(event)
-
-            elif event.type == pygame.KEYUP:
-                self.keyboard_input_u(event)
-
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                self.mouse_input(event, self.sm)
-
-            elif event.type == pygame.MOUSEBUTTONUP:
-                self.variables.clicking = False
-
-            elif event.type == pygame.MOUSEMOTION:
-                self.mouse_movement(event)
-
     def test_dt(self, event):
-        if event.key == pygame.K_PERIOD:
-            self.constants.fps_target = 10
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_PERIOD:
+                self.constants.fps_target = 10
 
     def keyboard_input_d(self, event):
         self.test_dt(event)
-        if event.key == pygame.K_w:
-            self.test_level.player.moving_up = True
-        elif event.key == pygame.K_s:
-            self.test_level.player.moving_down = True
-        elif event.key == pygame.K_d:
-            self.test_level.player.moving_right = True
-        elif event.key == pygame.K_a:
-            self.test_level.player.moving_left = True
-        elif event.key == pygame.K_g:
-            print("unused key")
-
-    def keyboard_input_u(self, event):
-        if event.key == pygame.K_w:
-            self.test_level.player.moving_up = False
-        elif event.key == pygame.K_s:
-            self.test_level.player.moving_down = False
-        elif event.key == pygame.K_d:
-            self.test_level.player.moving_right = False
-        elif event.key == pygame.K_a:
-            self.test_level.player.moving_left = False
 
     def mouse_movement(self, event):
-        self.main_menu.mouse_menu_movement(event)
+        #self.main_menu.mouse_menu_movement(event)
+        pass
 
     def mouse_input(self, event, sm):
-        self.main_menu.mouse_menu_input(event, self.sm)
+        #self.main_menu.mouse_menu_input(event, self.sm)
+        pass
 
     def run_game(self): # Runs the main game functions.
         while True:
             self.delta_time()
-            self.check_events(self.sm)
+            self.check_events()
             self.update_screen()
             self.clock.tick(self.constants.fps_target)
 

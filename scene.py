@@ -66,26 +66,28 @@ class MainMenu(Scene):
             self.screen.blit(self.exit_button_image, (self.constants.screen_width/2-150, 550))
 
     def mouse_menu_movement(self, event):
-        pos = pygame.mouse.get_pos()
-        if self.play_button.isOver(pos):
-            self.variables.overPlay = True
-        else:
-            self.variables.overPlay = False
-        if self.settings_button.isOver(pos):
-            self.variables.overSettings = True
-        else:
-            self.variables.overSettings = False
-        if self.exit_button.isOver(pos):
-            self.variables.overExit = True
-        else:
-            self.variables.overExit = False
+        if event.type == pygame.MOUSEMOTION:
+            pos = pygame.mouse.get_pos()
+            if self.play_button.isOver(pos):
+                self.variables.overPlay = True
+            else:
+                self.variables.overPlay = False
+            if self.settings_button.isOver(pos):
+                self.variables.overSettings = True
+            else:
+                self.variables.overSettings = False
+            if self.exit_button.isOver(pos):
+                self.variables.overExit = True
+            else:
+                self.variables.overExit = False
 
     def mouse_menu_input(self, event, sm):
-        self.variables.clicking = True
-        if self.variables.overPlay:
-            sm.push(TestLevel(self))
-        if self.variables.overExit:
-            sys.exit(0)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            self.variables.clicking = True
+            if self.variables.overPlay:
+                sm.push(TestLevel(self))
+            if self.variables.overExit:
+                sys.exit(0)
 
     def input(self, event, sm):
         self.mouse_menu_movement(event)
@@ -137,8 +139,11 @@ class TestLevel(Scene):
             self.player.moving_left = False
     
     def input(self, event):
-        self.player_key_up(event)
-        self.player_key_down(event)
+        for event in pygame.event.get:
+            if event.type == pygame.KEYUP:
+                self.player_key_up(event)
+            elif event.type == pygame.KEYDOWN:
+                self.player_key_down(event)
 
     def exit(self):
         print("Leaving test level.")
@@ -177,9 +182,9 @@ class SceneManager:
     def __init__(self):
         self.scenes = []
 
-    def input(self):
+    def input(self, event):
         if len(self.scenes) > 0:
-            self.scenes[-1].input()
+            self.scenes[-1].input(self, event)
 
     def update(self):
         if len(self.scenes) > 0:
